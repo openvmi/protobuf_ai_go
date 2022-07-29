@@ -1,4 +1,4 @@
-module github.com/openvmi/protobuf-ai-go
+module github.com/openvmi/protobuf_ai_go
 
 go 1.16
 
