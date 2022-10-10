@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LprInferenceServiceClient interface {
-	Infer(ctx context.Context, in *LprInferRequest, opts ...grpc.CallOption) (*LprInferRequest, error)
+	Infer(ctx context.Context, in *LprInferRequest, opts ...grpc.CallOption) (*LprInferResponse, error)
 }
 
 type lprInferenceServiceClient struct {
@@ -33,8 +33,8 @@ func NewLprInferenceServiceClient(cc grpc.ClientConnInterface) LprInferenceServi
 	return &lprInferenceServiceClient{cc}
 }
 
-func (c *lprInferenceServiceClient) Infer(ctx context.Context, in *LprInferRequest, opts ...grpc.CallOption) (*LprInferRequest, error) {
-	out := new(LprInferRequest)
+func (c *lprInferenceServiceClient) Infer(ctx context.Context, in *LprInferRequest, opts ...grpc.CallOption) (*LprInferResponse, error) {
+	out := new(LprInferResponse)
 	err := c.cc.Invoke(ctx, "/LprInferenceService/infer", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -46,7 +46,7 @@ func (c *lprInferenceServiceClient) Infer(ctx context.Context, in *LprInferReque
 // All implementations must embed UnimplementedLprInferenceServiceServer
 // for forward compatibility
 type LprInferenceServiceServer interface {
-	Infer(context.Context, *LprInferRequest) (*LprInferRequest, error)
+	Infer(context.Context, *LprInferRequest) (*LprInferResponse, error)
 	mustEmbedUnimplementedLprInferenceServiceServer()
 }
 
@@ -54,7 +54,7 @@ type LprInferenceServiceServer interface {
 type UnimplementedLprInferenceServiceServer struct {
 }
 
-func (UnimplementedLprInferenceServiceServer) Infer(context.Context, *LprInferRequest) (*LprInferRequest, error) {
+func (UnimplementedLprInferenceServiceServer) Infer(context.Context, *LprInferRequest) (*LprInferResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Infer not implemented")
 }
 func (UnimplementedLprInferenceServiceServer) mustEmbedUnimplementedLprInferenceServiceServer() {}
